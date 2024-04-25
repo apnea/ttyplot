@@ -1,4 +1,4 @@
-//
+ing//
 // ttyplot: a realtime plotting utility for terminal with data input from stdin
 // Copyright (c) 2018 by Antoni Sawicki
 // Copyright (c) 2019-2023 by Google LLC
@@ -245,6 +245,8 @@ static void paint_plot(void) {
     erase();
     getmaxyx(stdscr, height, width);
 
+    height = height + 1; // adjust height global var since we removed the annoying selfpromotion string print
+    
     plotheight = height - 4;
     plotwidth = width - 4;
     if (plotwidth >= (int)((sizeof(values1) / sizeof(double)) - 1))
@@ -263,7 +265,7 @@ static void paint_plot(void) {
     if (hardmax != FLT_MAX)
         max = hardmax;
 
-    mvaddstr(height - 1, width - strlen(verstring) - 1, verstring);
+    // mvaddstr(height - 1, width - strlen(verstring) - 1, verstring); // remove annoying selfpromotion which uses a whole line
 
     const char *clock_display;
     if (fake_clock) {
